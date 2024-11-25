@@ -2,21 +2,21 @@
  * File Name          : main.c
  * Author             : WCH
  * Version            : V1.0.0
- * Date               : 2020/04/30
+ * Date               : 2024/01/05
  * Description        : Main program body.
-*********************************************************************************
-* Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
-* Attention: This software (modified or not) and binary are used for 
-* microcontroller manufactured by Nanjing Qinheng Microelectronics.
-*******************************************************************************/
+ *********************************************************************************
+ * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
+ * Attention: This software (modified or not) and binary are used for 
+ * microcontroller manufactured by Nanjing Qinheng Microelectronics.
+ *******************************************************************************/
 
 /*
  *@Note
- Internal temperature sensor routine:
- Through the ADC channel 16, the output voltage value of the internal temperature
- sensor is collected.
-  Note: Take 3.3V as an example.
-*/
+ *Internal temperature sensor routine:
+ *Through the ADC channel 16, the output voltage value of the internal temperature
+ *sensor is collected.
+ *Note: Take 3.3V as an example.
+ */
 
 #include "debug.h"
 
@@ -33,15 +33,9 @@ s16 Calibrattion_Val = 0;
 void ADC_Function_Init(void)
 {
     ADC_InitTypeDef  ADC_InitStructure = {0};
-    GPIO_InitTypeDef GPIO_InitStructure = {0};
 
-    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);
     RCC_ADCCLKConfig(RCC_PCLK2_Div8);
-
-    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;
-    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;
-    GPIO_Init(GPIOA, &GPIO_InitStructure);
 
     ADC_DeInit(ADC1);
     ADC_InitStructure.ADC_Mode = ADC_Mode_Independent;
@@ -209,9 +203,11 @@ int main(void)
     u16 ADC_val;
     s32 val_mv;
 
+    SystemCoreClockUpdate();
     Delay_Init();
     USART_Printf_Init(115200);
     printf("SystemClk:%d\r\n", SystemCoreClock);
+    printf( "ChipID:%08x\r\n", DBGMCU_GetCHIPID() );
 
     ADC_Function_Init();
     printf("CalibrattionValue:%d\n", Calibrattion_Val);

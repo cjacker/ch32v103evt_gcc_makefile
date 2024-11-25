@@ -2,20 +2,20 @@
  * File Name          : main.c
  * Author             : WCH
  * Version            : V1.0.0
- * Date               : 2020/04/30
+ * Date               : 2023/11/17
  * Description        : Main program body.
-*********************************************************************************
-* Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
-* Attention: This software (modified or not) and binary are used for 
-* microcontroller manufactured by Nanjing Qinheng Microelectronics.
-*******************************************************************************/
+ *********************************************************************************
+ * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
+ * Attention: This software (modified or not) and binary are used for 
+ * microcontroller manufactured by Nanjing Qinheng Microelectronics.
+ *******************************************************************************/
 
 /*
  *@Note
-Automatic injection mode routine:
- ADC channel 2 (PA2) - regular group channel, channel 3 (PA3) - injection group channel
-  Note: Take 3.3V as an example.
-*/
+ *Automatic injection mode routine:
+ *ADC channel 2 (PA2) - regular group channel, channel 3 (PA3) - injection group channel
+ *Note: Take 3.3V as an example.
+ */
 
 #include "debug.h"
 
@@ -55,6 +55,7 @@ void ADC_Function_Init(void)
     ADC_InitStructure.ADC_NbrOfChannel = 1;
     ADC_Init(ADC1, &ADC_InitStructure);
 
+    ADC_InjectedSequencerLengthConfig(ADC1, 1);
     ADC_RegularChannelConfig(ADC1, ADC_Channel_2, 1, ADC_SampleTime_239Cycles5);
     ADC_InjectedChannelConfig(ADC1, ADC_Channel_3, 1, ADC_SampleTime_239Cycles5);
     ADC_AutoInjectedConvCmd(ADC1, ENABLE);
@@ -169,9 +170,11 @@ int main(void)
     u16 adc_val;
     u16 adc_jval;
 
+    SystemCoreClockUpdate();
     Delay_Init();
     USART_Printf_Init(115200);
     printf("SystemClk:%d\r\n", SystemCoreClock);
+    printf( "ChipID:%08x\r\n", DBGMCU_GetCHIPID() );
 
     ADC_Function_Init();
     printf("CalibrattionValue:%d\n", Calibrattion_Val);

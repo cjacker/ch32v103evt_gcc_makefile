@@ -2,20 +2,20 @@
  * File Name          : main.c
  * Author             : WCH
  * Version            : V1.0.0
- * Date               : 2020/04/30
+ * Date               : 2024/01/30
  * Description        : Main program body.
-*********************************************************************************
-* Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
-* Attention: This software (modified or not) and binary are used for 
-* microcontroller manufactured by Nanjing Qinheng Microelectronics.
-*******************************************************************************/
+ *********************************************************************************
+ * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
+ * Attention: This software (modified or not) and binary are used for 
+ * microcontroller manufactured by Nanjing Qinheng Microelectronics.
+ *******************************************************************************/
 
 /*
  *@Note
-GPIO routine:
- PA0 push-pull output.
-
-*/
+ *GPIO routine:
+ *PA0 push-pull output.
+ *
+ */
 
 #include "debug.h"
 
@@ -52,11 +52,12 @@ int main(void)
 {
     u8 i = 0;
 
-    NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
+    NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);
+    SystemCoreClockUpdate();
     Delay_Init();
     USART_Printf_Init(115200);
     printf("SystemClk:%d\r\n", SystemCoreClock);
-
+    printf( "ChipID:%08x\r\n", DBGMCU_GetCHIPID() );
     printf("GPIO Toggle TEST\r\n");
     GPIO_Toggle_INIT();
 

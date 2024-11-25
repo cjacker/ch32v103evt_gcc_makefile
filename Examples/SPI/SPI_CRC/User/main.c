@@ -2,29 +2,29 @@
  * File Name          : main.c
  * Author             : WCH
  * Version            : V1.0.0
- * Date               : 2020/04/30
+ * Date               : 2024/01/05
  * Description        : Main program body.
-*********************************************************************************
-* Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
-* Attention: This software (modified or not) and binary are used for 
-* microcontroller manufactured by Nanjing Qinheng Microelectronics.
-*******************************************************************************/
+ *********************************************************************************
+ * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
+ * Attention: This software (modified or not) and binary are used for 
+ * microcontroller manufactured by Nanjing Qinheng Microelectronics.
+ *******************************************************************************/
 
 /*
  *@Note
- Use CRC error check and master / slave mode transceiver routine:
- Master:SPI1_SCK(PA5)\SPI1_MOSI(PA7).
- Slave:SPI1_SCK(PA5)\SPI1_MISO(PA6).
-
- This example demonstrates the use of CRC error checking, the Master sends
- and the Slave receives.
- Note: The two boards download the Master and Slave programs respectively,
- and power on at the same time.
-    Hardware connection:
-               PA5 -- PA5
-               PA7 -- PA6
-
-*/
+ *Use CRC error check and master / slave mode transceiver routine:
+ *Master:SPI1_SCK(PA5)\SPI1_MOSI(PA7).
+ *Slave:SPI1_SCK(PA5)\SPI1_MISO(PA6).
+ *
+ *This example demonstrates the use of CRC error checking, the Master sends
+ *and the Slave receives.
+ *Note: The two boards download the Master and Slave programs respectively,
+ *and power on at the same time.
+ *    Hardware connection:
+ *               PA5 -- PA5
+ *               PA7 -- PA6
+ *
+ */
 
 #include "debug.h"
 
@@ -112,10 +112,12 @@ int main(void)
 {
     u8 i = 0, crcval;
 
-    NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);
+    NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);
+    SystemCoreClockUpdate();
     Delay_Init();
     USART_Printf_Init(115200);
     printf("SystemClk:%d\r\n", SystemCoreClock);
+    printf( "ChipID:%08x\r\n", DBGMCU_GetCHIPID() );
 
 #if(SPI_MODE == SLAVE_MODE)
     printf("SLAVE Mode\r\n");

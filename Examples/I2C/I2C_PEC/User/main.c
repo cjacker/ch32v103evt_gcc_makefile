@@ -2,7 +2,7 @@
  * File Name          : main.c
  * Author             : WCH
  * Version            : V1.0.0
- * Date               : 2020/04/30
+ * Date               : 2024/01/06
  * Description        : Main program body.
 *********************************************************************************
 * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
@@ -12,18 +12,18 @@
 
 /*
  *@Note
- Use PEC error check and master / slave mode transceiver routine:
- I2C1_SCL(PB8)\I2C1_SDA(PB9):
- This example demonstrates that the Master sends with PEC error checking,
- and the Slave receives. If a transmission error occurs, an error interrupt
- is triggered.
- Note: The two boards download the Master and Slave programs respectively,
- and power on at the same time.
-    Hardware connection:
-               PB8 -- PB8
-               PB9 -- PB9
-
-*/
+ *Use PEC error check and master / slave mode transceiver routine:
+ *I2C1_SCL(PB8)\I2C1_SDA(PB9):
+ *This example demonstrates that the Master sends with PEC error checking,
+ *and the Slave receives. If a transmission error occurs, an error interrupt
+ *is triggered.
+ *Note: The two boards download the Master and Slave programs respectively,
+ *and power on at the same time.
+ *    Hardware connection:
+ *               PB8 -- PB8
+ *               PB9 -- PB9
+ *
+ */
 
 #include "debug.h"
 
@@ -89,14 +89,8 @@ void IIC_Init(u32 bound, u16 address)
     I2C_ITConfig(I2C1, I2C_IT_ERR, ENABLE);
 
 #endif
-
     I2C_Cmd(I2C1, ENABLE);
     I2C_CalculatePEC(I2C1, ENABLE);
-
-#if(I2C_MODE == HOST_MODE)
-    I2C_AcknowledgeConfig(I2C1, ENABLE);
-
-#endif
 }
 
 /*********************************************************************
@@ -111,10 +105,12 @@ int main(void)
     u8 i = 0;
     u8 pecValue;
 
-    NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);
+    NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);
+    SystemCoreClockUpdate();
     Delay_Init();
     USART_Printf_Init(460800);
     printf("SystemClk:%d\r\n", SystemCoreClock);
+    printf( "ChipID:%08x\r\n", DBGMCU_GetCHIPID() );
 
 #if(I2C_MODE == HOST_MODE)
     printf("IIC Host mode\r\n");
