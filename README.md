@@ -17,3 +17,9 @@ The default 'User' codes is 'GPIO_Toggle' from the EVT example, all examples shi
 
 To build the project, type `make`.
 
+## Note
+
+Please refer to [opensource-toolchain-ch32v tutorial](https://github.com/cjacker/opensource-toolchain-ch32v) for more info.
+
+And you must use [this latest WCH OpenOCD](https://github.com/cjacker/wch-openocd).
+
